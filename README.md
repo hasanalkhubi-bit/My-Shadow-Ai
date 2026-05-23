@@ -1,16 +1,4 @@
-shadow-ai-web/
-│── app/
-│   │── layout.tsx
-│   │── page.tsx
-│
-│── package.jsonshadow-ai-web/
-│── app/
-│   │── page.tsx
-│   │── success/page.tsx
-│   │── cancel/page.tsx
-│   │── api/create-checkout-session/route.ts
-│
-{pachage.json
+{
   "name": "shadow-ai-web",
   "version": "1.0.0",
   "private": true,
@@ -25,14 +13,23 @@ shadow-ai-web/
     "react-dom": "18.2.0",
     "stripe": "latest"
   }
-}
-  },
-  "dependencies": {
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "stripe": "latest"
-  }
+}shadow-ai-web/
+│── app/
+│   │── layout.tsx
+│   │── page.tsx
+│   │── success/page.tsx
+│   │── cancel/page.tsx
+│   │── api/create-checkout-session/route.ts
+│
+│── package.json
+│── vercel.jsonexport default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <body style={{ margin: 0, fontFamily: "sans-serif", background: "#0b0b0f", color: "white" }}>
+        {children}
+      </body>
+    </html>
+  );
 }"use client";
 
 import { useState } from "react";
@@ -42,75 +39,34 @@ export default function Home() {
 
   const subscribe = async () => {
     setLoading(true);
-    const res = await fetch("/api/create-checkout-session", {
-      method: "POST"
-    });
-
+    const res = await fetch("/api/create-checkout-session", { method: "POST" });
     const data = await res.json();
     window.location.href = data.url;
   };
 
   return (
-    <main style={styles.container}>
-      <h1 style={styles.title}>Shadow AI</h1>
-      <p style={styles.subtitle}>يفهمك قبل أن تطلب</p>
+    <main style={{ textAlign: "center", marginTop: 100 }}>
+      <h1>Shadow AI</h1>
+      <p>يفهمك قبل أن تطلب</p>
 
-      <div style={styles.card}>
-        <h2>Premium</h2>
-        <p>احصل على ذكاء تنبؤي كامل + تحليلات + Twin AI</p>
-
-        <button onClick={subscribe} style={styles.button}>
-          {loading ? "Loading..." : "اشترك الآن"}
-        </button>
-      </div>
+      <button onClick={subscribe}>
+        {loading ? "Loading..." : "اشترك"}
+      </button>
     </main>
   );
-}
-
-const styles: any = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#0b0b0f",
-    color: "white",
-    fontFamily: "sans-serif"
-  },
-  title: { fontSize: 50, marginBottom: 0 },
-  subtitle: { opacity: 0.7, marginBottom: 40 },
-  card: {
-    padding: 30,
-    border: "1px solid #333",
-    borderRadius: 20,
-    textAlign: "center"
-  },
-  button: {
-    marginTop: 20,
-    padding: "12px 20px",
-    borderRadius: 10,
-    border: "none",
-    background: "#ff3b3b",
-    color: "white",
-    cursor: "pointer"
-  }
-};import Stripe from "stripe";
+}import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST() {
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
     mode: "subscription",
     line_items: [
       {
         price_data: {
           currency: "usd",
-          product_data: {
-            name: "Shadow AI Premium"
-          },
+          product_data: { name: "Shadow AI Premium" },
           unit_amount: 999
         },
         quantity: 1
@@ -122,104 +78,9 @@ export async function POST() {
 
   return NextResponse.json({ url: session.url });
 }export default function Success() {
-  return (
-    <div style={{ color: "white", background: "#0b0b0f", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <h1>تم الاشتراك بنجاح 🎉</h1>
-    </div>
-  );
+  return <h1>تم الاشتراك 🎉</h1>;
 }export default function Cancel() {
-  return (
-    <div style={{ color: "white", background: "#0b0b0f", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <h1>تم إلغاء الدفع</h1>
-    </div>
-  );
+  return <h1>تم الإلغاء</h1>;
 }{
-  "version": 2,
-  "builds": [
-    { "src": "app/**/*", "use": "@vercel/next" }
-  ]
-}STRIPE_SECRET_KEY=your_stripe_secret_key_here# My-Shadow-Ai{
-  "name": "shadow-ai-web",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "14.2.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  }
-}export const metadata = {
-  title: "Shadow AI",
-  description: "AI that understands you before you ask"
-};
-
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body style={{ margin: 0, fontFamily: "sans-serif", background: "#0b0b0f", color: "white" }}>
-        {children}
-      </body>
-    </html>
-  );
-}export default function Page() {
-  return (
-    <main style={styles.container}>
-      <h1 style={styles.title}>Shadow AI</h1>
-      <p style={styles.subtitle}>يفهمك قبل أن تطلب</p>
-
-      <div style={styles.card}>
-        <h2>🚀 التطبيق جاهز</h2>
-        <p>
-          هذا أول إصدار من موقع Shadow AI.
-          يمكنك تطويره لاحقًا ليصبح SaaS كامل.
-        </p>
-
-        <button style={styles.button}>
-          Coming Soon
-        </button>
-      </div>
-    </main>
-  );
+  "version": 2
 }
-
-const styles: any = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    background: "radial-gradient(circle, #1a1a2e, #0b0b0f)"
-  },
-  title: {
-    fontSize: 60,
-    marginBottom: 0
-  },
-  subtitle: {
-    opacity: 0.7,
-    marginBottom: 40
-  },
-  card: {
-    padding: 30,
-    border: "1px solid #333",
-    borderRadius: 20,
-    maxWidth: 400
-  },
-  button: {
-    marginTop: 20,
-    padding: "10px 20px",
-    borderRadius: 10,
-    border: "none",
-    background: "#ff3b3b",
-    color: "white"
-  }
-};
