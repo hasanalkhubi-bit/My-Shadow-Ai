@@ -5,9 +5,7 @@ shadow-ai-web/
 │   │── cancel/page.tsx
 │   │── api/create-checkout-session/route.ts
 │
-│── package.json
-│── vercel.json
-│── .env.local{
+{pachage.json
   "name": "shadow-ai-web",
   "version": "1.0.0",
   "private": true,
@@ -15,6 +13,14 @@ shadow-ai-web/
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "stripe": "latest"
+  }
+}
   },
   "dependencies": {
     "next": "latest",
