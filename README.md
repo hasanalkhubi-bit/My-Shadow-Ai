@@ -1,5 +1,10 @@
 shadow-ai-web/
 │── app/
+│   │── layout.tsx
+│   │── page.tsx
+│
+│── package.jsonshadow-ai-web/
+│── app/
 │   │── page.tsx
 │   │── success/page.tsx
 │   │── cancel/page.tsx
@@ -133,4 +138,88 @@ export async function POST() {
   "builds": [
     { "src": "app/**/*", "use": "@vercel/next" }
   ]
-}STRIPE_SECRET_KEY=your_stripe_secret_key_here# My-Shadow-Ai
+}STRIPE_SECRET_KEY=your_stripe_secret_key_here# My-Shadow-Ai{
+  "name": "shadow-ai-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}export const metadata = {
+  title: "Shadow AI",
+  description: "AI that understands you before you ask"
+};
+
+export default function RootLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body style={{ margin: 0, fontFamily: "sans-serif", background: "#0b0b0f", color: "white" }}>
+        {children}
+      </body>
+    </html>
+  );
+}export default function Page() {
+  return (
+    <main style={styles.container}>
+      <h1 style={styles.title}>Shadow AI</h1>
+      <p style={styles.subtitle}>يفهمك قبل أن تطلب</p>
+
+      <div style={styles.card}>
+        <h2>🚀 التطبيق جاهز</h2>
+        <p>
+          هذا أول إصدار من موقع Shadow AI.
+          يمكنك تطويره لاحقًا ليصبح SaaS كامل.
+        </p>
+
+        <button style={styles.button}>
+          Coming Soon
+        </button>
+      </div>
+    </main>
+  );
+}
+
+const styles: any = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    background: "radial-gradient(circle, #1a1a2e, #0b0b0f)"
+  },
+  title: {
+    fontSize: 60,
+    marginBottom: 0
+  },
+  subtitle: {
+    opacity: 0.7,
+    marginBottom: 40
+  },
+  card: {
+    padding: 30,
+    border: "1px solid #333",
+    borderRadius: 20,
+    maxWidth: 400
+  },
+  button: {
+    marginTop: 20,
+    padding: "10px 20px",
+    borderRadius: 10,
+    border: "none",
+    background: "#ff3b3b",
+    color: "white"
+  }
+};
